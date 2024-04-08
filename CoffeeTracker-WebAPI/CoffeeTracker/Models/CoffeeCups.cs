@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace CoffeeTracker.Models;
 
 public class CoffeeCups
@@ -6,6 +8,10 @@ public class CoffeeCups
     public int Quantity {get; set;}
     public int? Measure {get; set;}
     public string? Description {get; set;}
+
+    [EnumDataType(typeof(CoffeeMeasureUnits))]
     public CoffeeMeasureUnits Units { get; set;}
-    public DateOnly Date {get; set;}
+
+    [DataType(DataType.Date)]
+    public DateTime Date {get; set;}
 }
