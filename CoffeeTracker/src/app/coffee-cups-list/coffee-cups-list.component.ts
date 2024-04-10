@@ -16,8 +16,8 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 })
 
 export class CoffeeCupsListComponent implements OnInit{
-  cup : CoffeeCups | undefined
-  coffeeCups : CoffeeCups[] = []
+
+  coffeeCups : CoffeeCups[] | undefined = []
 
 
   constructor (
@@ -26,7 +26,15 @@ export class CoffeeCupsListComponent implements OnInit{
 
   getCups()
   {
-    this.coffeeCups = this.coffeeService.getCoffeeCups()
+    this.coffeeService.getCoffeeCups().subscribe( resp =>
+      this.coffeeCups = resp.body?.map( cups => {
+        return {id: cups.id, description : cups.description,
+          date : new Date(cups.date),
+          measure : cups.measure,
+          quantity : cups.quantity,
+          units : cups.units}
+      })
+    )
     console.log("Get Cups")
   }
 
@@ -37,5 +45,4 @@ export class CoffeeCupsListComponent implements OnInit{
   getEnumString( units: CoffeeMeasureUnits) : string {
     return CoffeeMeasureUnits[units]
   }
-
 }

@@ -19,11 +19,15 @@
             <td> {{cup.date.toLocaleDateString()}}</td>
             <td> {{getEnumString(cup.units)}}</td>
             <td>
-                <a calss="button" routerLink="/details/{{cup.id}}">
+                <a class="button" routerLink="/details/{{cup.id}}">
                     <span>{{cup.id}}</span> 
                 </a>
             </td>
         </tr>
     </tbody>
 </table>
+
+<a class="button" routerLink="/details/10">
+    <span>Test</span>
+</a>
 

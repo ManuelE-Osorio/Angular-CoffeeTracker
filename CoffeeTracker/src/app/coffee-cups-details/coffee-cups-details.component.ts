@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, input } from '@angular/core';
 import { CoffeeCupsService } from '../coffee-cups.service';
-import { CoffeeCups } from '../coffee-cups';
+import { CoffeeCups, CoffeeCupsForm } from '../coffee-cups';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Location, NgIf } from '@angular/common';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-coffee-cups-details',
@@ -13,6 +13,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './coffee-cups-details.component.css'
 })
 export class CoffeeCupsDetailsComponent implements OnInit{
+  form = new FormGroup<CoffeeCupsForm>();
   quantity = new FormControl<number>(this.CoffeeCups?.quantity ?? 0);
 
 
@@ -31,9 +32,18 @@ export class CoffeeCupsDetailsComponent implements OnInit{
 
   getCoffeeCup(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.CoffeeCups = this.coffeeService.getCoffeeCup( id )
-    console.log('cups')
-    console.log(this.CoffeeCups)
+    this.coffeeService.getCoffeeCup(id).subscribe( resp => {
+      if( resp.body != null){
+        this.CoffeeCups = {
+          id: resp.body.id,
+          description: resp.body.description,
+          date : new Date(resp.body.date),
+          measure : resp.body.measure,
+          quantity : resp.body.quantity,
+          units : resp.body.units,
+        }
+      }
+    });
   }
 
   goBack() {
