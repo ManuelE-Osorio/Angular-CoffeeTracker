@@ -7,7 +7,7 @@ export interface CoffeeCups {
     date: Date
 }
 
-enum CoffeeMeasureUnits {
+export enum CoffeeMeasureUnits {
     ml = 0,
     oz = 1
 }
