@@ -15,10 +15,15 @@ export interface CoffeeCupsForm {
     measure: FormControl<number>;
     description: FormControl<string>;
     units: FormControl<CoffeeMeasureUnits>;
-    date: FormControl<Date>;
+    date: FormControl<string>;
   }
 
 export enum CoffeeMeasureUnits {
     ml = 0,
     oz = 1
 }
+
+export const CoffeeMeasureUnitsMapping: Record<string, string>= {
+    [CoffeeMeasureUnits.ml]: "ml",
+    [CoffeeMeasureUnits.oz]: "oz",
+  }

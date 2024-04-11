@@ -4,6 +4,6 @@ import { CoffeeCupsDetailsComponent } from './coffee-cups-details/coffee-cups-de
 
 export const routes: Routes = [
     { path: 'coffeecups', component: CoffeeCupsListComponent},
-    { path: 'details/:id', component: CoffeeCupsDetailsComponent },
+    { path: 'coffeecups/details/:id', component: CoffeeCupsDetailsComponent },
     { path: '', redirectTo: '/coffeecups', pathMatch: 'full' }
 ];

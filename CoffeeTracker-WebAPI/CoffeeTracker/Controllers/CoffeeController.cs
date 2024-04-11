@@ -74,5 +74,4 @@ public class CoffeeCupsController(CoffeeTrackerContext dbContext) : ControllerBa
         await CoffeeContext.SaveChangesAsync();
         return TypedResults.Ok(cup);
     }
-
 }

@@ -16,22 +16,42 @@ export class CoffeeCupsService {
 
   getCoffeeCups() : Observable<HttpResponse<CoffeeCups[]>> {
     return this.http.get<CoffeeCups[]>(this.baseUrl, {
-        observe: 'response',
-        responseType: 'json'
-      }).pipe(
-        tap( resp => console.log(`Get Request with code ${resp.status}`)),
-        catchError(this.errorHandler)
-      );
+      observe: 'response',
+      responseType: 'json'
+    }).pipe(
+      tap( {next: resp => console.log(`Get request with code ${resp.status}`)}),
+      catchError(this.errorHandler)
+    );
   }
 
   getCoffeeCup( id: number) : Observable<HttpResponse<CoffeeCups>> {
-    return this.http.get<CoffeeCups[]>( `${this.baseUrl}/${id}`, {
-        observe: 'response',
-        responseType: 'json'
-      }).pipe(
-        tap( resp => console.log(`Get Request with code ${resp.status}`)),
-        catchError(this.errorHandler)
-      );
+    return this.http.get<CoffeeCups>( `${this.baseUrl}/${id}`, {
+      observe: 'response',
+      responseType: 'json'
+    }).pipe(
+      tap( {next: resp => console.log(`Get request with code ${resp.status}`)}),
+      catchError(this.errorHandler)
+    );
+  }
+
+  putCoffeeCup( cups: CoffeeCups ) : Observable<HttpResponse<CoffeeCups>> {
+    return this.http.put<HttpResponse<CoffeeCups>>( `${this.baseUrl}/${cups.id}`, cups, {
+      observe: 'response',
+      responseType: 'json'
+    }).pipe(
+      tap( {next: (resp) => console.log(`Put request with code ${resp.status}`)}),
+      catchError( this.errorHandler)
+    );
+  }
+
+  deleteCoffeeCup( id: number ) : Observable<HttpResponse<any>> {
+    return this.http.delete<HttpResponse<CoffeeCups>>( `${this.baseUrl}/${id}`, {
+      observe: 'response',
+      responseType: 'json'
+    }).pipe(
+      tap( {next: resp => console.log(`Delete request with code ${resp.status}`)}),
+      catchError( this.errorHandler )
+    );
   }
 
   private errorHandler<T>(error: HttpErrorResponse) {

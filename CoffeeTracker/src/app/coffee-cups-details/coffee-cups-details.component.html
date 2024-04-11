@@ -1,14 +1,5 @@
-<label>Testing</label>
 
-<div>
-<div><span>id: </span>{{CoffeeCups?.id}}</div>
-<div>
-  <label for="coffeecups-quantity">Quantity: </label>
-</div>
-<button type="button" (click)="goBack()">go back</button>
-</div>
-
-<form [formGroup]="form" (ngSubmit)="submitForm()">
+<form *ngIf="CoffeeCups; else InvalidId" [formGroup]="form" (ngSubmit)="submitForm()">
 
   <div>
     <label for="quantity">Quantity: </label>
@@ -26,14 +17,26 @@
   </div>
 
   <div>
-    <label for="units">Units: </label>
-    <input id="units" type="text" formControlName="units">
+    <label for="units">Units:</label>
+    <select formControlName="units" type="number" required>
+      <option *ngFor="let unit of Units" [ngValue]="unit">{{UnitsMapping[unit]}}</option>
+    </select>
   </div>
 
   <div>
     <label for="date">Date: </label>
     <input id="date" type="date" formControlName="date">
   </div>
+  <div>
+    <button type="button" (click)="deleteCoffeeCup(CoffeeCups.id)">delete</button>
+    <button type="button" (click)="goBack()">go back</button>
+    <input type="submit" value="Update">
 
-  <input type="submit" />
+  </div>
+
 </form>
+
+<ng-template #InvalidId>
+  <p> Not Found </p>
+  <button type="button" (click)="goBack()">go back</button>
+</ng-template>
