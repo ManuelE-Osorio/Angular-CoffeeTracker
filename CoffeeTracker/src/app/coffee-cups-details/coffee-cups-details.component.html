@@ -4,7 +4,36 @@
 <div><span>id: </span>{{CoffeeCups?.id}}</div>
 <div>
   <label for="coffeecups-quantity">Quantity: </label>
-  <input id="name" type="text" [formControl]="quantity">
 </div>
 <button type="button" (click)="goBack()">go back</button>
 </div>
+
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+
+  <div>
+    <label for="quantity">Quantity: </label>
+    <input id="quantity" type="number" formControlName="quantity">
+  </div>
+  
+  <div>
+    <label for="measure">Measure: </label>
+    <input id="measure" type="number" formControlName="measure">
+  </div>
+
+  <div>
+    <label for="description">Description: </label>
+    <input id="description" type="text" formControlName="description">
+  </div>
+
+  <div>
+    <label for="units">Units: </label>
+    <input id="units" type="text" formControlName="units">
+  </div>
+
+  <div>
+    <label for="date">Date: </label>
+    <input id="date" type="date" formControlName="date">
+  </div>
+
+  <input type="submit" />
+</form>
