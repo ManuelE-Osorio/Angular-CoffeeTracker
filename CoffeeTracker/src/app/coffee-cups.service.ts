@@ -34,6 +34,16 @@ export class CoffeeCupsService {
     );
   }
 
+  postCoffeeCup( cups: CoffeeCups ) : Observable<HttpResponse<CoffeeCups>> {
+    return this.http.post<CoffeeCups>(`${this.baseUrl}`, cups, {
+      observe: 'response',
+      responseType: 'json'
+    }).pipe(
+      tap( {next: (resp) => console.log(`Put request with code ${resp.status}`)}),
+      catchError( this.errorHandler)
+    );
+  }
+
   putCoffeeCup( cups: CoffeeCups ) : Observable<HttpResponse<CoffeeCups>> {
     return this.http.put<HttpResponse<CoffeeCups>>( `${this.baseUrl}/${cups.id}`, cups, {
       observe: 'response',

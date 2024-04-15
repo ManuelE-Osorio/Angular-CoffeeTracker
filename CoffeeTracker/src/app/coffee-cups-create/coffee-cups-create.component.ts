@@ -6,14 +6,14 @@ import { Location, NgFor, NgIf, formatDate } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-coffee-cups-details',
+  selector: 'app-coffee-cups-create',
   standalone: true,
   imports: [ RouterLink, NgIf, ReactiveFormsModule, NgFor ],
-  templateUrl: './coffee-cups-details.component.html',
-  styleUrl: './coffee-cups-details.component.css'
+  templateUrl: './coffee-cups-create.component.html',
+  styleUrl: './coffee-cups-create.component.css'
 })
 
-export class CoffeeCupsDetailsComponent implements OnInit{
+export class CoffeeCupsCreateComponent implements OnInit{
   form : FormGroup<CoffeeCupsForm> = new FormGroup<CoffeeCupsForm>({
     id: new FormControl<number>(0, {nonNullable: true, validators: Validators.required} ),
     quantity: new FormControl<number>(0, {nonNullable: true, validators: Validators.required}),
@@ -37,13 +37,7 @@ export class CoffeeCupsDetailsComponent implements OnInit{
   
   ngOnInit() {
     console.log("startup")
-    if(Number(this.route.snapshot.paramMap.get('id')) === 0){
-      this.CoffeeCups = { id: 0, quantity: 0, measure: 0, description: "", units: 0, date: new Date(Date.now())}
-    }
-    else {
-    this.getCoffeeCup();
-    }
- 
+    this.CoffeeCups = { id: 0, quantity: 0, measure: 0, description: "", units: 0, date: new Date(Date.now())}
   }
 
   createCoffeeCup() {
@@ -53,50 +47,6 @@ export class CoffeeCupsDetailsComponent implements OnInit{
           .then( () => window.location.reload())
       }
     })
-  }
-
-  getCoffeeCup() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.coffeeService.getCoffeeCup(id).subscribe( resp => {
-      if( resp.body != null){
-        this.CoffeeCups = {
-          id: resp.body.id,
-          description: resp.body.description,
-          date : new Date(resp.body.date),
-          measure : resp.body.measure,
-          quantity : resp.body.quantity,
-          units : resp.body.units,
-        }
-        this.setForm()
-      }
-    });
-  }
-
-  putCoffeeCup() {
-    console.log(this.CoffeeCups)
-    this.coffeeService.putCoffeeCup(this.CoffeeCups).subscribe( resp => {
-      if( resp.body != null) {
-        this.CoffeeCups = {
-          id: resp.body.id,
-          description: resp.body.description,
-          date : new Date(resp.body.date),
-          measure : resp.body.measure,
-          quantity : resp.body.quantity,
-          units : resp.body.units,
-        }
-        this.setForm()
-      }
-    })
-  }
-
-  deleteCoffeeCup( id: number ) {  //what to subscribe?? if success redirect
-    this.coffeeService.deleteCoffeeCup(id).subscribe( resp => {
-      if( resp.status === 200) {
-        this.goBack();
-      }
-    }
-
-    )
   }
 
   setForm(){
@@ -115,12 +65,7 @@ export class CoffeeCupsDetailsComponent implements OnInit{
     console.log(this.form.valid)
     if(this.form.valid){
       this.CoffeeCups = Object.assign(this.CoffeeCups, this.form.value);
-      if(this.CoffeeCups.id != 0){
-        this.putCoffeeCup();
-      }
-      else{
-        this.createCoffeeCup();
-      }
+      this.createCoffeeCup();
     }
   }
 

@@ -22,7 +22,7 @@ public class CoffeeCupsController(CoffeeTrackerContext dbContext) : ControllerBa
         if (CoffeeContext.Coffee == null)
             return TypedResults.Problem("Entity set 'Coffee'  is null.");
   
-        return TypedResults.Ok(await CoffeeContext.Coffee.ToListAsync());
+        return TypedResults.Ok(await CoffeeContext.Coffee.OrderBy( p => p.Date).ToListAsync());
     }
 
     [HttpGet("{id}")]

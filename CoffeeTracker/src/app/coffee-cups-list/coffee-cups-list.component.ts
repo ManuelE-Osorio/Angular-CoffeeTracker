@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CoffeeCupsService } from '../coffee-cups.service';
 import { map } from 'rxjs';
 import { CoffeeCups } from '../coffee-cups';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { CoffeeMeasureUnits } from '../coffee-cups';
 import { formatDate } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -10,7 +10,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-coffee-cups-list',
   standalone: true,
-  imports: [NgFor, RouterLink],
+  imports: [NgFor, NgIf, RouterLink],
   templateUrl: './coffee-cups-list.component.html',
   styleUrl: './coffee-cups-list.component.css'
 })

@@ -1,12 +1,14 @@
-<table>
+<h1>Coffee Cups Logs</h1>
+
+<table *ngIf="coffeeCups!.length > 0; else EmptyList">
     <thead>
         <tr>
             <th> Id</th>
-            <th> Quantity</th>
-            <th> Measure</th>
+            <th> Cups</th>
+            <th> Cup Measure</th>
             <th> Description</th>
             <th> Date</th>
-            <th> Units</th>
+            <th> Cup Units</th>
             <th> Details</th>
         </tr>
     </thead>
@@ -27,8 +29,12 @@
     </tbody>
 </table>
 
+<ng-template #EmptyList>
+    <h3> No logs found</h3>
+</ng-template>
+
 <div>
-    <button routerLink="/coffeecups/details/0">
+    <button routerLink="/coffeecups/create">
         <span>Create New</span>
     </button>
 </div>
