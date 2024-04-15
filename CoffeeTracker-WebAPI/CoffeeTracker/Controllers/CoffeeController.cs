@@ -45,6 +45,7 @@ public class CoffeeCupsController(CoffeeTrackerContext dbContext) : ControllerBa
     }
 
     [HttpPost]
+    [Consumes("application/json")]
     public async Task<IResult> PostCoffeeCup( [FromBody] CoffeeCups cup)
     {
         if (!ModelState.IsValid)
@@ -56,6 +57,7 @@ public class CoffeeCupsController(CoffeeTrackerContext dbContext) : ControllerBa
     }
 
     [HttpDelete("{id}")]
+    [Consumes("application/json")]
     public async Task<IResult> DeleteCoffeeCup( int id)
     {
         var cup = await CoffeeContext.Coffee.FindAsync( id );
@@ -68,6 +70,7 @@ public class CoffeeCupsController(CoffeeTrackerContext dbContext) : ControllerBa
     }
 
     [HttpPut("{id}")]
+    [Consumes("application/json")]
     public async Task<IResult> PutCoffeeCup( int id, [FromBody] CoffeeCups cup )
     {
         if(!ModelState.IsValid || id != cup.Id)
