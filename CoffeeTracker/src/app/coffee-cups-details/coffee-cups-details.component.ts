@@ -14,6 +14,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 
 export class CoffeeCupsDetailsComponent implements OnInit{
+  
   form : FormGroup<CoffeeCupsForm> = new FormGroup<CoffeeCupsForm>({
     id: new FormControl<number>(0, {nonNullable: true, validators: Validators.required} ),
     quantity: new FormControl<number>(0, {nonNullable: true, validators: Validators.required}),

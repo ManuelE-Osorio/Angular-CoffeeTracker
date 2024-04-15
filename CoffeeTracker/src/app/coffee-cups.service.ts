@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, asyncScheduler, catchError, scheduled, tap, throwError } from 'rxjs';
 import { CoffeeCups, CoffeeMeasureUnits } from './coffee-cups';
+import { query } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,14 @@ export class CoffeeCupsService {
     private http: HttpClient
   ) {}
 
-  getCoffeeCups() : Observable<HttpResponse<CoffeeCups[]>> {
-    return this.http.get<CoffeeCups[]>(this.baseUrl, {
+  getCoffeeCups(date?: string) : Observable<HttpResponse<CoffeeCups[]>> {
+    let queryUrl: string = this.baseUrl
+    if( date != null){
+      queryUrl += `?date=${date}`
+    }
+
+    console.log(queryUrl)
+    return this.http.get<CoffeeCups[]>(queryUrl, {
       observe: 'response',
       responseType: 'json'
     }).pipe(

@@ -1,7 +1,7 @@
 
 <form *ngIf="CoffeeCups; else InvalidId" [formGroup]="form" (ngSubmit)="submitForm()">
 
-  <h2> Details of Coffee Cups Log ID: {{CoffeeCups.id}}</h2>
+  <h2> Coffee Cups Log Details</h2>
 
   <div>
     <label for="quantity">Cups: </label>
@@ -14,11 +14,6 @@
   </div>
 
   <div>
-    <label for="description">Description: </label>
-    <input id="description" type="text" formControlName="description">
-  </div>
-
-  <div>
     <label for="units">Cup Units:</label>
     <select formControlName="units" type="number" required>
       <option *ngFor="let unit of Units" [ngValue]="unit">{{UnitsMapping[unit]}}</option>
@@ -26,12 +21,17 @@
   </div>
 
   <div>
+    <label for="description">Description: </label>
+    <input id="description" type="text" formControlName="description">
+  </div>
+
+  <div>
     <label for="date">Date: </label>
     <input id="date" type="date" formControlName="date">
   </div>
   <div>
-    <button type="button" (click)="deleteCoffeeCup(CoffeeCups.id)">delete</button>
-    <button type="button" (click)="goBack()">go back</button>
+    <button type="button" (click)="goBack()">Return</button>
+    <button type="button" (click)="deleteCoffeeCup(CoffeeCups.id)">Delete</button>
     <input type="submit" value="Update">
   </div>
 

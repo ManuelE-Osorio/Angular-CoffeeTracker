@@ -6,11 +6,12 @@ import { NgFor, NgIf } from '@angular/common';
 import { CoffeeMeasureUnits } from '../coffee-cups';
 import { formatDate } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-coffee-cups-list',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink],
+  imports: [NgFor, NgIf, RouterLink, ReactiveFormsModule],
   templateUrl: './coffee-cups-list.component.html',
   styleUrl: './coffee-cups-list.component.css'
 })
@@ -18,15 +19,17 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 export class CoffeeCupsListComponent implements OnInit{
 
   coffeeCups : CoffeeCups[] | undefined = []
-
+  form : FormGroup = new FormGroup({
+    date: new FormControl<string | null >( null, {})
+  });
 
   constructor (
     private coffeeService : CoffeeCupsService
   ) {}
 
-  getCups()
+  getCups( date?: string)
   {
-    this.coffeeService.getCoffeeCups().subscribe( resp =>
+    this.coffeeService.getCoffeeCups(date).subscribe( resp =>
       this.coffeeCups = resp.body?.map( cups => {
         return {id: cups.id, description : cups.description,
           date : new Date(cups.date),
@@ -44,5 +47,12 @@ export class CoffeeCupsListComponent implements OnInit{
 
   getEnumString( units: CoffeeMeasureUnits) : string {
     return CoffeeMeasureUnits[units]
+  }
+
+  submitForm() {
+    if( this.form.valid && this.form.controls['date'].value != null) {
+      console.log(this.form.controls['date'].value)
+      this.getCups(this.form.controls['date'].value)
+    }
   }
 }

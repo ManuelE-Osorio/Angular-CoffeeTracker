@@ -17,16 +17,22 @@ public class CoffeeCupsController(CoffeeTrackerContext dbContext) : ControllerBa
     private readonly CoffeeTrackerContext CoffeeContext = dbContext;
 
     [HttpGet]
-    public async Task<IResult> GetCoffeeCups()
+    public async Task<IResult> GetCoffeeCups(string? date)
     {
         if (CoffeeContext.Coffee == null)
             return TypedResults.Problem("Entity set 'Coffee'  is null.");
-  
-        return TypedResults.Ok(await CoffeeContext.Coffee.OrderBy( p => p.Date).ToListAsync());
+
+        var query = from m in CoffeeContext.Coffee select m;
+        query = query.OrderByDescending( p => p.Date);
+        
+        if( DateTime.TryParse( date, out DateTime dateResult))
+            query = query.Where( p => p.Date.Date == dateResult);
+
+        return TypedResults.Ok(await query.ToListAsync());
     }
 
     [HttpGet("{id}")]
-    public async Task<IResult> GetCoffeeCup( int id )
+    public async Task<IResult> GetCoffeeCup( int id)
     {
         if (CoffeeContext.Coffee == null)
             return TypedResults.Problem("Entity set 'Coffee'  is null.");
