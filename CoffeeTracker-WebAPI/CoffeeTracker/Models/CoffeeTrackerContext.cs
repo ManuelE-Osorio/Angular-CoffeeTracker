@@ -8,6 +8,12 @@ public class CoffeeTrackerContext(DbContextOptions<CoffeeTrackerContext> options
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // add conversion to enum property
+        modelBuilder.Entity<CoffeeCups>( p => {
+            p.Property( p => p.Quantity).IsRequired();
+            p.Property( p => p.Measure).IsRequired();
+            p.Property( p => p.Description).IsRequired();
+            p.Property( p => p.Units).IsRequired();
+            p.Property( p => p.Date).IsRequired();
+        });
     }
 }
