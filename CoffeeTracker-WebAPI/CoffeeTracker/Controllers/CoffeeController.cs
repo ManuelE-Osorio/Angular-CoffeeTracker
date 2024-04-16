@@ -1,13 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CoffeeTracker.Models;
-using System.Threading.Tasks;
-using System.Linq;
 using System.Data;
-using System;
 
 namespace ShiftsLoggerWebApi.Controllers;
-
 
 [ApiController]
 [ApiConventionType(typeof(DefaultApiConventions))]
@@ -26,7 +22,7 @@ public class CoffeeCupsController(CoffeeTrackerContext dbContext) : ControllerBa
         query = query.OrderByDescending( p => p.Date);
         
         if( DateTime.TryParse( date, out DateTime dateResult))
-            query = query.Where( p => p.Date.Date == dateResult);
+            query = query.Where( p => p.Date!.Value.Date == dateResult);
 
         return TypedResults.Ok(await query.ToListAsync());
     }
