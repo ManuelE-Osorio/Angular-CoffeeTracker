@@ -15,12 +15,20 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 export class CoffeeCupsCreateComponent implements OnInit{
   form : FormGroup<CoffeeCupsForm> = new FormGroup<CoffeeCupsForm>({
-    id: new FormControl<number>(0, {nonNullable: true, validators: Validators.required} ),
-    quantity: new FormControl<number>(0, {nonNullable: true, validators: Validators.required}),
-    measure: new FormControl<number>(0, {nonNullable: true, validators: Validators.required}),
-    description: new FormControl<string>('', {nonNullable: true, validators: Validators.required}),
+    id: new FormControl<number>(0, {nonNullable: true, validators: [
+      Validators.required, Validators.min(0), Validators.max(2147483647)
+    ]} ),
+    quantity: new FormControl<number>(1, {nonNullable: true, validators: [
+      Validators.required, Validators.min(1), Validators.max(2147483647)
+    ]}),
+    measure: new FormControl<number>(1, {nonNullable: true, validators: [
+      Validators.required, Validators.min(1), Validators.max(2147483647)
+    ]}),
+    description: new FormControl<string>('Description', {nonNullable: true, validators: [
+      Validators.required, Validators.minLength(3), Validators.maxLength(400)
+    ]}),
     units: new FormControl<CoffeeMeasureUnits>(CoffeeMeasureUnits.ml, {nonNullable: true, validators: Validators.required}),
-    date: new FormControl<string>(new Date().toLocaleDateString(), {nonNullable: true, validators: Validators.required})
+    date: new FormControl<string>(formatDate(Date.now(), 'yyyy-MM-dd', 'en'), {nonNullable: true, validators: Validators.required})
   });
 
   CoffeeCups!: CoffeeCups;

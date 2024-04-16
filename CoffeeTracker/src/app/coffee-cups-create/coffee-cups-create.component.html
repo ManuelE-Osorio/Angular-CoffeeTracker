@@ -3,15 +3,29 @@
     <h2> Create new Coffee Cups Log</h2>
 
     <div>
-      <label for="quantity">Cup Quantity: </label>
-      <input id="quantity" type="number" formControlName="quantity">
+      <label for="quantity">Cups quantity: </label>
+      <input id="quantity" type="number" name="quantity" formControlName="quantity">
     </div>
-    
+  
+    <div *ngIf="form.controls.quantity.invalid && (form.controls.quantity.dirty || form.controls.quantity.touched)" class="alert alert-danger">
+      <div *ngIf="form.controls.quantity.errors?.['required']">The Cups quantity is required</div>
+      <div *ngIf="form.controls.quantity.errors?.['min'] || form.controls.quantity.errors?.['max']">
+        Cups quantity must be between 1 and 2147483647
+      </div>
+    </div>
+  
     <div>
       <label for="measure">Cup Measure: </label>
       <input id="measure" type="number" formControlName="measure">
     </div>
-
+  
+    <div *ngIf="form.controls.measure.invalid && (form.controls.measure.dirty || form.controls.measure.touched)" class="alert alert-danger">
+      <div *ngIf="form.controls.measure.errors?.['required']">The Measure quantity is required</div>
+      <div *ngIf="form.controls.measure.errors?.['min'] || form.controls.measure.errors?.['max']">
+        Measure quantity must be between 1 and 2147483647
+      </div>
+    </div>
+  
     <div>
       <label for="units">Cup Units:</label>
       <select formControlName="units" type="number" required>
@@ -21,7 +35,14 @@
   
     <div>
       <label for="description">Description: </label>
-      <input id="description" type="text" formControlName="description">
+      <textarea id="description" formControlName="description" rows="3" required></textarea>
+    </div>
+  
+    <div *ngIf="form.controls.description.invalid && (form.controls.description.dirty || form.controls.description.touched)" class="alert alert-danger">
+      <div *ngIf="form.controls.description.errors?.['required']">The Description is required</div>
+      <div *ngIf="form.controls.description.errors?.['minlength'] || form.controls.description.errors?.['maxlength']">
+        The description must be between 3 and 400 characters.
+      </div>
     </div>
   
     <div>
