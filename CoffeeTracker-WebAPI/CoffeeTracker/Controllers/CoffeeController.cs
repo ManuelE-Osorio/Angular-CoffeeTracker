@@ -48,7 +48,15 @@ public class CoffeeCupsController(CoffeeTrackerContext dbContext) : ControllerBa
             return TypedResults.BadRequest();
 
         CoffeeContext.Coffee.Add(cup);
-        await CoffeeContext.SaveChangesAsync();
+        try
+        {
+            await CoffeeContext.SaveChangesAsync();
+        }
+        catch
+        {
+            return TypedResults.StatusCode(500);
+        }
+        
         return TypedResults.Created($"/{cup.Id}",cup);
     }
 
@@ -61,7 +69,15 @@ public class CoffeeCupsController(CoffeeTrackerContext dbContext) : ControllerBa
             return TypedResults.NotFound();
         
         CoffeeContext.Coffee.Remove(cup);
-        await CoffeeContext.SaveChangesAsync();
+        try
+        {
+            await CoffeeContext.SaveChangesAsync();
+        }
+        catch
+        {
+            return TypedResults.StatusCode(500);
+        }
+
         return TypedResults.Ok();
     }
 
@@ -76,7 +92,15 @@ public class CoffeeCupsController(CoffeeTrackerContext dbContext) : ControllerBa
             return TypedResults.NotFound();
 
         CoffeeContext.Coffee.Update(cup);
-        await CoffeeContext.SaveChangesAsync();
+        try
+        {
+            await CoffeeContext.SaveChangesAsync();
+        }
+        catch
+        {
+            return TypedResults.StatusCode(500);
+        }
+
         return TypedResults.Ok(cup);
     }
 }
