@@ -1,12 +1,10 @@
 <h1>Coffee Cups Logs</h1>
 
-<form [formGroup]="form" (ngSubmit)="submitForm()">
 
-    <div>
-        <input id="date" type="date" formControlName="date">
-        <input type="submit" value="Filter">
-    </div>
-</form>
+<div>
+    <label> Filter:</label>
+    <input #dateField type="date" (input)="search(dateField.value)" />
+</div>
 
 <table *ngIf="coffeeCups!= undefined && coffeeCups!.length > 0; else EmptyList">
     <thead>
