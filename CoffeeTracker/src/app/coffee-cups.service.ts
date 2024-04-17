@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angul
 import { Observable, asyncScheduler, catchError, scheduled, tap, throwError } from 'rxjs';
 import { CoffeeCups, CoffeeMeasureUnits } from './coffee-cups';
 import { query } from '@angular/animations';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class CoffeeCupsService {
   private baseUrl = "https://localhost:7245/api/CoffeeCups";
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private notificationService: NotificationService
   ) {}
 
   getCoffeeCups(date?: string) : Observable<HttpResponse<CoffeeCups[]>> {
@@ -21,13 +23,12 @@ export class CoffeeCupsService {
       queryUrl += `?date=${date}`
     }
 
-    console.log(queryUrl)
     return this.http.get<CoffeeCups[]>(queryUrl, {
       observe: 'response',
       responseType: 'json'
     }).pipe(
-      tap( {next: resp => console.log(`Get request with code ${resp.status}`)}),
-      catchError(this.errorHandler)
+      tap( {next: resp => this.log(`Items fetched succesfully`)}),
+      catchError(this.logError<HttpResponse<CoffeeCups[]>>())
     );
   }
 
@@ -36,8 +37,8 @@ export class CoffeeCupsService {
       observe: 'response',
       responseType: 'json'
     }).pipe(
-      tap( {next: resp => console.log(`Get request with code ${resp.status}`)}),
-      catchError(this.errorHandler)
+      tap( {next: resp => this.log(`Item fetched succesfully`)}),
+      catchError(this.logError<HttpResponse<CoffeeCups>>())
     );
   }
 
@@ -46,18 +47,18 @@ export class CoffeeCupsService {
       observe: 'response',
       responseType: 'json'
     }).pipe(
-      tap( {next: (resp) => console.log(`Put request with code ${resp.status}`)}),
-      catchError( this.errorHandler)
+      tap( {next: (resp) => this.log(`Item created succesfully`)}),
+      catchError( this.logError<HttpResponse<CoffeeCups>>())
     );
   }
 
   putCoffeeCup( cups: CoffeeCups ) : Observable<HttpResponse<CoffeeCups>> {
-    return this.http.put<HttpResponse<CoffeeCups>>( `${this.baseUrl}/${cups.id}`, cups, {
+    return this.http.put<CoffeeCups>( `${this.baseUrl}/${cups.id}`, cups, {
       observe: 'response',
       responseType: 'json'
     }).pipe(
-      tap( {next: (resp) => console.log(`Put request with code ${resp.status}`)}),
-      catchError( this.errorHandler)
+      tap( {next: (resp) => this.log(`Item modified succesfully`)}),
+      catchError( this.logError<HttpResponse<CoffeeCups>>())
     );
   }
 
@@ -66,18 +67,19 @@ export class CoffeeCupsService {
       observe: 'response',
       responseType: 'json'
     }).pipe(
-      tap( {next: resp => console.log(`Delete request with code ${resp.status}`)}),
-      catchError( this.errorHandler )
+      tap( {next: resp => this.log(`Item deleted succesfully`)}),
+      catchError( this.logError<HttpResponse<CoffeeCups>>() )
     );
   }
 
-  private errorHandler<T>(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      console.error('An error occurred:', error.error);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-    }
-    return [] as T
+  private log(message: string) {
+    this.notificationService.add(`${message}`);
+  }
+
+  private logError<T>( ){
+    return (error: any): Observable<T> => {
+      this.log(`Unable to complete operation, please try again later. Error code: ${error.status}`);
+      return scheduled([[] as T], asyncScheduler);
+    };
   }
 }

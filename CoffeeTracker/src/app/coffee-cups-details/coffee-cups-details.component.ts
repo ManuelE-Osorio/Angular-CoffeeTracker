@@ -4,11 +4,12 @@ import { CoffeeCups, CoffeeCupsForm, CoffeeMeasureUnits, CoffeeMeasureUnitsMappi
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location, NgFor, NgIf, formatDate } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
   selector: 'app-coffee-cups-details',
   standalone: true,
-  imports: [ RouterLink, NgIf, ReactiveFormsModule, NgFor ],
+  imports: [ RouterLink, NgIf, ReactiveFormsModule, NgFor, NotificationsComponent ],
   templateUrl: './coffee-cups-details.component.html',
   styleUrl: './coffee-cups-details.component.css'
 })
@@ -45,14 +46,7 @@ export class CoffeeCupsDetailsComponent implements OnInit{
   ) {}
   
   ngOnInit() {
-    console.log("startup")
-    if(Number(this.route.snapshot.paramMap.get('id')) === 0){
-      this.CoffeeCups = { id: 0, quantity: 0, measure: 0, description: "", units: 0, date: new Date(Date.now())}
-    }
-    else {
     this.getCoffeeCup();
-    }
- 
   }
 
   createCoffeeCup() {
@@ -82,7 +76,6 @@ export class CoffeeCupsDetailsComponent implements OnInit{
   }
 
   putCoffeeCup() {
-    console.log(this.CoffeeCups)
     this.coffeeService.putCoffeeCup(this.CoffeeCups).subscribe( resp => {
       if( resp.body != null) {
         this.CoffeeCups = {
@@ -98,14 +91,12 @@ export class CoffeeCupsDetailsComponent implements OnInit{
     })
   }
 
-  deleteCoffeeCup( id: number ) {  //what to subscribe?? if success redirect
+  deleteCoffeeCup( id: number ) {
     this.coffeeService.deleteCoffeeCup(id).subscribe( resp => {
       if( resp.status === 200) {
         this.goBack();
       }
-    }
-
-    )
+    });
   }
 
   setForm(){
@@ -119,9 +110,7 @@ export class CoffeeCupsDetailsComponent implements OnInit{
     }
   }
 
-  submitForm(){ //Validate form
-    console.log(this.form)
-    console.log(this.form.valid)
+  submitForm(){
     if(this.form.valid){
       this.CoffeeCups = Object.assign(this.CoffeeCups, this.form.value);
       if(this.CoffeeCups.id != 0){

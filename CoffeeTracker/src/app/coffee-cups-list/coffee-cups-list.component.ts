@@ -7,11 +7,12 @@ import { CoffeeMeasureUnits } from '../coffee-cups';
 import { formatDate } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
   selector: 'app-coffee-cups-list',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink, ReactiveFormsModule],
+  imports: [NgFor, NgIf, RouterLink, ReactiveFormsModule, NotificationsComponent],
   templateUrl: './coffee-cups-list.component.html',
   styleUrl: './coffee-cups-list.component.css'
 })
@@ -37,8 +38,7 @@ export class CoffeeCupsListComponent implements OnInit{
           quantity : cups.quantity,
           units : cups.units}
       })
-    )
-    console.log("Get Cups")
+    );
   }
 
   ngOnInit() : void {
@@ -51,7 +51,6 @@ export class CoffeeCupsListComponent implements OnInit{
 
   submitForm() {
     if( this.form.valid && this.form.controls['date'].value != null) {
-      console.log(this.form.controls['date'].value)
       this.getCups(this.form.controls['date'].value)
     }
   }
