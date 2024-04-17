@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoffeeCupsService } from '../coffee-cups.service';
-import { map } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs';
 import { CoffeeCups } from '../coffee-cups';
 import { NgFor, NgIf } from '@angular/common';
 import { CoffeeMeasureUnits } from '../coffee-cups';
@@ -23,9 +23,29 @@ export class CoffeeCupsListComponent implements OnInit{
     date: new FormControl<string | null >( null, {})
   });
 
+  private searchDate = new Subject<string>();
+
+
   constructor (
     private coffeeService : CoffeeCupsService
   ) {}
+
+  ngOnInit() : void {
+    this.getCups()
+
+    this.searchDate.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.coffeeService.getCoffeeCups(term)),
+    ).subscribe( resp =>
+      this.coffeeCups = resp.body?.map( cups => {
+        return {id: cups.id, description : cups.description,
+          date : new Date(cups.date),
+          measure : cups.measure,
+          quantity : cups.quantity,
+          units : cups.units}
+      }));
+  }
 
   getCups( date?: string)
   {
@@ -40,17 +60,11 @@ export class CoffeeCupsListComponent implements OnInit{
     );
   }
 
-  ngOnInit() : void {
-    this.getCups()
+  search(term: string ): void {
+    this.searchDate.next(term);
   }
 
   getEnumString( units: CoffeeMeasureUnits) : string {
     return CoffeeMeasureUnits[units]
-  }
-
-  submitForm() {
-    if( this.form.valid && this.form.controls['date'].value != null) {
-      this.getCups(this.form.controls['date'].value)
-    }
   }
 }
