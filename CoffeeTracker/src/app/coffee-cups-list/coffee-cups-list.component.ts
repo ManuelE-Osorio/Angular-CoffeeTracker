@@ -7,12 +7,11 @@ import { CoffeeMeasureUnits } from '../coffee-cups';
 import { formatDate } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
   selector: 'app-coffee-cups-list',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink, ReactiveFormsModule, NotificationsComponent],
+  imports: [NgFor, NgIf, RouterLink, ReactiveFormsModule],
   templateUrl: './coffee-cups-list.component.html',
   styleUrl: './coffee-cups-list.component.css'
 })

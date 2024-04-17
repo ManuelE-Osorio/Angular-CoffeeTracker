@@ -4,12 +4,11 @@ import { CoffeeCups, CoffeeCupsForm, CoffeeMeasureUnits, CoffeeMeasureUnitsMappi
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location, NgFor, NgIf, formatDate } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
   selector: 'app-coffee-cups-details',
   standalone: true,
-  imports: [ RouterLink, NgIf, ReactiveFormsModule, NgFor, NotificationsComponent ],
+  imports: [ RouterLink, NgIf, ReactiveFormsModule, NgFor],
   templateUrl: './coffee-cups-details.component.html',
   styleUrl: './coffee-cups-details.component.css'
 })
