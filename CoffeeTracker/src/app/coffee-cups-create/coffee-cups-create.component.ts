@@ -44,7 +44,6 @@ export class CoffeeCupsCreateComponent implements OnInit{
   ) {}
   
   ngOnInit() {
-    console.log("startup")
     this.CoffeeCups = { id: 0, quantity: 0, measure: 0, description: "", units: 0, date: new Date(Date.now())}
   }
 
@@ -52,7 +51,6 @@ export class CoffeeCupsCreateComponent implements OnInit{
     this.coffeeService.postCoffeeCup( this.CoffeeCups ).subscribe( resp => {
       if( resp.status === 201 && resp.body!= null){
         this.router.navigate([`coffeecups/details/${resp.body.id}`])
-          .then( () => window.location.reload())
       }
     })
   }
@@ -68,9 +66,7 @@ export class CoffeeCupsCreateComponent implements OnInit{
     }
   }
 
-  submitForm(){ //Validate form
-    console.log(this.form.value)
-    console.log(this.form.valid)
+  submitForm(){
     if(this.form.valid){
       this.CoffeeCups = Object.assign(this.CoffeeCups, this.form.value);
       this.createCoffeeCup();

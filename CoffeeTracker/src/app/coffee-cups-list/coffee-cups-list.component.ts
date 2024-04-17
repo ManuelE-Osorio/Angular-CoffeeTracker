@@ -37,8 +37,7 @@ export class CoffeeCupsListComponent implements OnInit{
           quantity : cups.quantity,
           units : cups.units}
       })
-    )
-    console.log("Get Cups")
+    );
   }
 
   ngOnInit() : void {
@@ -51,7 +50,6 @@ export class CoffeeCupsListComponent implements OnInit{
 
   submitForm() {
     if( this.form.valid && this.form.controls['date'].value != null) {
-      console.log(this.form.controls['date'].value)
       this.getCups(this.form.controls['date'].value)
     }
   }

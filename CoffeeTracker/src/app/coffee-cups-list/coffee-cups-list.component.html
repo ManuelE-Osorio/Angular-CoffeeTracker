@@ -8,7 +8,7 @@
     </div>
 </form>
 
-<table *ngIf="coffeeCups!.length > 0; else EmptyList">
+<table *ngIf="coffeeCups!= undefined && coffeeCups!.length > 0; else EmptyList">
     <thead>
         <tr>
             <th> Cups</th>
@@ -44,5 +44,4 @@
         <span>Create New</span>
     </button>
 </div>
-
 
