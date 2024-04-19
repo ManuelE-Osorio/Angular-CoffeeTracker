@@ -27,3 +27,8 @@ export const CoffeeMeasureUnitsMapping: Record<string, string>= {
     [CoffeeMeasureUnits.ml]: "ml",
     [CoffeeMeasureUnits.oz]: "oz",
   }
+
+export interface NotificationMessage{
+  message : string;
+  type: string;
+}
