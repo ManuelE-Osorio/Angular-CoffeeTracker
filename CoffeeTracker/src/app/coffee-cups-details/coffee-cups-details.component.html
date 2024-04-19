@@ -1,14 +1,14 @@
 
-<form *ngIf="CoffeeCups; else InvalidId" [formGroup]="form" (ngSubmit)="submitForm()">
+<form class="container shadowbox" *ngIf="CoffeeCups; else InvalidId" [formGroup]="form" (ngSubmit)="submitForm()">
 
   <h2> Coffee Cups Log Details</h2>
 
   <div>
     <label for="quantity">Cups quantity: </label>
-    <input id="quantity" type="number" name="quantity" formControlName="quantity">
+    <input class="input" id="quantity" type="number" name="quantity" formControlName="quantity">
   </div>
 
-  <div *ngIf="form.controls.quantity.invalid && (form.controls.quantity.dirty || form.controls.quantity.touched)" class="alert alert-danger">
+  <div *ngIf="form.controls.quantity.invalid && (form.controls.quantity.dirty || form.controls.quantity.touched)" class="validation-error">
     <div *ngIf="form.controls.quantity.errors?.['required']">The Cups quantity is required</div>
     <div *ngIf="form.controls.quantity.errors?.['min'] || form.controls.quantity.errors?.['max']">
       Cups quantity must be between 1 and 2147483647
@@ -17,10 +17,10 @@
 
   <div>
     <label for="measure">Cup Measure: </label>
-    <input id="measure" type="number" formControlName="measure">
+    <input class="input" id="measure" type="number" formControlName="measure">
   </div>
 
-  <div *ngIf="form.controls.measure.invalid && (form.controls.measure.dirty || form.controls.measure.touched)" class="alert alert-danger">
+  <div *ngIf="form.controls.measure.invalid && (form.controls.measure.dirty || form.controls.measure.touched)" class="validation-error">
     <div *ngIf="form.controls.measure.errors?.['required']">The Measure quantity is required</div>
     <div *ngIf="form.controls.measure.errors?.['min'] || form.controls.measure.errors?.['max']">
       Measure quantity must be between 1 and 2147483647
@@ -29,17 +29,17 @@
 
   <div>
     <label for="units">Cup Units:</label>
-    <select formControlName="units" type="number" required>
+    <select class="select" formControlName="units" type="number" required>
       <option *ngFor="let unit of Units" [ngValue]="unit">{{UnitsMapping[unit]}}</option>
     </select>
   </div>
 
   <div>
     <label for="description">Description: </label>
-    <textarea id="description" formControlName="description" rows="3" required></textarea>
+    <textarea class="input" id="description" formControlName="description" rows="3" required></textarea>
   </div>
 
-  <div *ngIf="form.controls.description.invalid && (form.controls.description.dirty || form.controls.description.touched)" class="alert alert-danger">
+  <div *ngIf="form.controls.description.invalid && (form.controls.description.dirty || form.controls.description.touched)" class="validation-error">
     <div *ngIf="form.controls.description.errors?.['required']">The Description is required</div>
     <div *ngIf="form.controls.description.errors?.['minlength'] || form.controls.description.errors?.['maxlength']">
       The description must be between 3 and 400 characters.
@@ -48,17 +48,20 @@
 
   <div>
     <label for="date">Date: </label>
-    <input id="date" type="date" formControlName="date">
+    <input class="input" id="date" type="date" formControlName="date">
   </div>
   <div>
-    <button type="button" (click)="goBack()">Return</button>
-    <button type="button" (click)="deleteCoffeeCup(CoffeeCups.id)">Delete</button>
-    <input type="submit" value="Update">
+    <button class="button info" type="button" (click)="goBack()">Return</button>
+    <button class="button danger" type="button" (click)="deleteCoffeeCup(CoffeeCups.id)">Delete</button>
+    <input class="button success" type="submit" value="Update">
   </div>
 
 </form>
 
 <ng-template #InvalidId>
-  <p> Not Found </p>
-  <button type="button" (click)="goBack()">go back</button>
+  <div class="container shadowbox">
+    <p> Not Found </p>
+    <button class="button info" type="button" (click)="goBack()">go back</button>
+  </div>
+  
 </ng-template>

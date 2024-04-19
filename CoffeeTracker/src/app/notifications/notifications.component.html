@@ -1,5 +1,5 @@
 <div *ngIf="notificationService.messages.length">
 
-    <div *ngFor='let message of notificationService.messages' class="{{message.type}}"> {{message.message}} </div>
+    <div *ngFor='let message of notificationService.messages' class="notification {{message.type}}"> {{message.message}} </div>
   
 </div>
