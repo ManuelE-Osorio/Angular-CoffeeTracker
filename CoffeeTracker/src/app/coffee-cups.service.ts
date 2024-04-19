@@ -27,7 +27,7 @@ export class CoffeeCupsService {
       observe: 'response',
       responseType: 'json'
     }).pipe(
-      tap( {next: resp => this.log(`Items fetched succesfully`)}),
+      tap( {next: resp => this.log(`Items fetched succesfully`, 'success')}),
       catchError(this.logError<HttpResponse<CoffeeCups[]>>())
     );
   }
@@ -37,7 +37,7 @@ export class CoffeeCupsService {
       observe: 'response',
       responseType: 'json'
     }).pipe(
-      tap( {next: resp => this.log(`Item fetched succesfully`)}),
+      tap( {next: resp => this.log(`Item fetched succesfully`, 'success')}),
       catchError(this.logError<HttpResponse<CoffeeCups>>())
     );
   }
@@ -47,7 +47,7 @@ export class CoffeeCupsService {
       observe: 'response',
       responseType: 'json'
     }).pipe(
-      tap( {next: (resp) => this.log(`Item created succesfully`)}),
+      tap( {next: (resp) => this.log(`Item created succesfully`, 'success')}),
       catchError( this.logError<HttpResponse<CoffeeCups>>())
     );
   }
@@ -57,7 +57,7 @@ export class CoffeeCupsService {
       observe: 'response',
       responseType: 'json'
     }).pipe(
-      tap( {next: (resp) => this.log(`Item modified succesfully`)}),
+      tap( {next: (resp) => this.log(`Item modified succesfully`, 'success')}),
       catchError( this.logError<HttpResponse<CoffeeCups>>())
     );
   }
@@ -67,18 +67,18 @@ export class CoffeeCupsService {
       observe: 'response',
       responseType: 'json'
     }).pipe(
-      tap( {next: resp => this.log(`Item deleted succesfully`)}),
+      tap( {next: resp => this.log(`Item deleted succesfully`, 'success')}),
       catchError( this.logError<HttpResponse<CoffeeCups>>() )
     );
   }
 
-  private log(message: string) {
-    this.notificationService.add(`${message}`);
+  private log(message: string, type: string) {
+    this.notificationService.add( message, type);
   }
 
   private logError<T>( ){
     return (error: any): Observable<T> => {
-      this.log(`Unable to complete operation, please try again later. Error code: ${error.status}`);
+      this.log(`Unable to complete operation, please try again later. Error code: ${error.status}`, 'error');
       return scheduled([[] as T], asyncScheduler);
     };
   }

@@ -9,8 +9,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   selector: 'app-coffee-cups-create',
   standalone: true,
   imports: [ RouterLink, NgIf, ReactiveFormsModule, NgFor ],
-  templateUrl: './coffee-cups-create.component.html',
-  styleUrl: './coffee-cups-create.component.css'
+  templateUrl: './coffee-cups-create.component.html'
 })
 
 export class CoffeeCupsCreateComponent implements OnInit{

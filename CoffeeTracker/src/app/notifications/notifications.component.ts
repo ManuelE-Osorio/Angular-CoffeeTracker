@@ -6,8 +6,7 @@ import { NotificationService } from '../notification.service';
   selector: 'app-notifications',
   standalone: true,
   imports: [NgFor, NgIf],
-  templateUrl: './notifications.component.html',
-  styleUrl: './notifications.component.css'
+  templateUrl: './notifications.component.html'
 })
 
 export class NotificationsComponent {
