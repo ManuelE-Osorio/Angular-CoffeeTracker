@@ -16,13 +16,13 @@ export class CoffeeCupsDetailsComponent implements OnInit{
   
   form : FormGroup<CoffeeCupsForm> = new FormGroup<CoffeeCupsForm>({
     id: new FormControl<number>(0, {nonNullable: true, validators: [
-      Validators.required, Validators.min(1), Validators.max(2147483647)
+      Validators.required, Validators.min(1), Validators.max(2147483647), Validators.pattern("^[0-9]*$")
     ]} ),
     quantity: new FormControl<number>(0, {nonNullable: true, validators: [
-      Validators.required, Validators.min(1), Validators.max(2147483647)
+      Validators.required, Validators.min(1), Validators.max(2147483647), Validators.pattern("^[0-9]*$")
     ]}),
     measure: new FormControl<number>(0, {nonNullable: true, validators: [
-      Validators.required, Validators.min(1), Validators.max(2147483647)
+      Validators.required, Validators.min(1), Validators.max(2147483647), Validators.pattern("^[0-9]*$")
     ]}),
     description: new FormControl<string>('', {nonNullable: true, validators: [
       Validators.required, Validators.minLength(3), Validators.maxLength(400)
