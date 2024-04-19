@@ -8,9 +8,12 @@
     </div>
   
     <div *ngIf="form.controls.quantity.invalid && (form.controls.quantity.dirty || form.controls.quantity.touched)" class="validation-error">
-      <div *ngIf="form.controls.quantity.errors?.['required']">The Cups quantity is required</div>
+      <div *ngIf="form.controls.quantity.errors?.['required']">The Cups quantity must be a positive number</div>
       <div *ngIf="form.controls.quantity.errors?.['min'] || form.controls.quantity.errors?.['max']">
         Cups quantity must be between 1 and 2147483647
+      </div>
+      <div *ngIf="form.controls.quantity.errors?.['pattern']">
+        Cups quantity must be a positive integer
       </div>
     </div>
   
@@ -20,9 +23,12 @@
     </div>
   
     <div *ngIf="form.controls.measure.invalid && (form.controls.measure.dirty || form.controls.measure.touched)" class="validation-error">
-      <div *ngIf="form.controls.measure.errors?.['required']">The Measure quantity is required</div>
+      <div *ngIf="form.controls.measure.errors?.['required']">The Measure quantity must be a positive number</div>
       <div *ngIf="form.controls.measure.errors?.['min'] || form.controls.measure.errors?.['max']">
         Measure quantity must be between 1 and 2147483647
+      </div>
+      <div *ngIf="form.controls.measure.errors?.['pattern']">
+        Cups measure must be a integer
       </div>
     </div>
   
